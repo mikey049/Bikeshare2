@@ -71,7 +71,7 @@ RMSLESummary <-function(data, lev = NULL, model = NULL){
   sum <- 0
   for (i in 1:n){
     
-    x <- (log(data$pred[i] +1) - log(data$obs[i]+1))^2
+    x <- (log(sqrt(data$pred[i]^2) + 1) - log(data$obs[i]+1))^2
     
     sum <- sum + x
     
@@ -272,11 +272,29 @@ p16 + facet_wrap( ~month)
 
 
 # Checking Casual
-p13 <- qplot(hour,casual, data = Data.Munged[ Data.Munged$month ==05 & Data.Munged$year==2011,], type = c("p", "g"),
+p13 <- qplot(hour,casual, data = Data.Munged[ Data.Munged$month ==2 & Data.Munged$year==2011 & Data.Munged$workingday==1,], type = c("p", "g"),
              ylab = "Number of Rentals",
              main = "Rentals",
              xlab = "Hours")
 p13 + facet_wrap( ~day)
+
+p22 <- qplot(hour,casual, data = Data.Munged[ Data.Munged$year==2011 & Data.Munged$workingday==1 ,], type = c("p", "g"),
+             ylab = "Number of Rentals",
+             main = "Rentals",
+             xlab = "Hours")
+p22 + facet_wrap( ~month)
+
+p23 <- qplot(day,workingday, data = Data.Munged[ Data.Munged$month ==05 & Data.Munged$year==2011,], type = c("p", "g"),
+             ylab = "Number of Rentals",
+             main = "Rentals",
+             xlab = "Hours")
+p23 + facet_wrap( ~holiday)
+
+
+
+
+
+
 
 p14 <- qplot(hour,casual, data = Data.Munged[ Data.Munged$year==2011 & Data.Munged$workingday == 1,], type = c("p", "g"),
              ylab = "Number of Rentals",
